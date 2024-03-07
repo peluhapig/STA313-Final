@@ -1,0 +1,33 @@
+---
+title: "Initial"
+output: html_document
+date: "2024-03-07"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(dplyr)
+```
+
+
+```{r}
+tot_data <- read_csv("data.csv",show_col_types = FALSE)
+data <- select(tot_data, 'id', 'Year','Ontario GHG ID', 'Facility Owner', 'Facility Name', 'Facility City','Facility Primary NAICS Code', 'Total CO2e from all sources in CO2e (t)')
+```
+
+```{r}
+data$'Facility City' <- str_to_title(data$`Facility City`)
+data$'Facility Owner' <- str_to_title(data$`Facility Owner`)
+data$'Facility Name' <- str_to_title(data$`Facility Name`)
+data["Facility City"][data["Facility City"] == "25 Milton"] <- "Milton"
+data["Facility City"][data["Facility City"] == "N/A Concession, Kenora District"] <- "Kenora District"
+data["Facility City"][data["Facility City"] == "Timmins/District Of Cochrane"] <- "Timmins"
+```
+
+```{r}
+summary(data)
+```
+
+
+
